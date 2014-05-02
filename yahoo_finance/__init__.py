@@ -16,6 +16,21 @@ def edt_to_utc(date, mask='%d/%m/%Y %I:%M%p'):
     return date_utc
 
 
+class YQLQueryError(Exception):
+
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return 'Query failed with error: "%s".' % repr(self.value)
+
+
+class YQLResponseMalformedError(Exception):
+
+    def __str__(self):
+        return 'Response malformed.'
+
+
 class Currency(object):
 
     def __init__(self, symbol):
@@ -29,9 +44,9 @@ class Currency(object):
             return response['query']['results']
         except KeyError:
             try:
-                raise Exception('YQL query failed with error: "%s".' % response['error']['description'])
+                raise YQLQueryError(response['error']['description'])
             except KeyError:
-                raise Exception('YQL response malformed.')
+                raise YQLResponseMalformedError()
 
     def _fetch(self):
         data = self.__request(self.symbol)['rate']
