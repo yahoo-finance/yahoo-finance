@@ -35,7 +35,7 @@ class Currency(object):
 
     def __init__(self, symbol):
         self.symbol = symbol
-        self.rate = self._fetch()
+        self.data_set = self._fetch()
 
     @staticmethod
     def __request(symbol):
@@ -55,16 +55,16 @@ class Currency(object):
         return data
 
     def refresh(self):
-        self.rate = self._fetch()
+        self.data_set = self._fetch()
 
     def get_bid(self):
-        print self.rate['Bid']
+        print self.data_set['Bid']
 
     def get_ask(self):
-        print self.rate['Ask']
+        print self.data_set['Ask']
 
     def get_rate(self):
-        print self.rate['Rate']
+        print self.data_set['Rate']
 
 
 class Share(object):
