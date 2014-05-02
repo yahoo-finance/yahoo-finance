@@ -25,12 +25,13 @@ class Currency(object):
     @staticmethod
     def __request(symbol):
         response = yql.YQLQuery().execute('select * from yahoo.finance.xchange where pair in ("%s")' % symbol)
-        if 'query' in response and 'results' in response['query']:
+        try:
             return response['query']['results']
-        elif 'error' in response:
-            print 'YQL query failed with error: "%s".' % response['error']['description']
-        else:
-            print 'YQL response malformed.'
+        except KeyError:
+            try:
+                raise Exception('YQL query failed with error: "%s".' % response['error']['description'])
+            except KeyError:
+                raise Exception('YQL response malformed.')
 
     def _fetch(self):
         data = self.__request(self.symbol)['rate']
