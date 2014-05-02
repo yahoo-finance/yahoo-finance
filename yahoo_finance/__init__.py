@@ -4,10 +4,17 @@ from datetime import datetime
 import pytz
 
 __author__ = 'Lukasz Banasiak'
-__version__ = '0.9.0'
+__version__ = '0.9.1'
 
 
 def edt_to_utc(date, mask='%d/%m/%Y %I:%M%p'):
+    """
+    Convert EDT (Eastern Daylight Time) to UTC
+
+    :param date: EDT date string e.g. '5/2/2014 4:00pm'
+    :param mask: format of input date e.g '%d/%m/%Y %I:%M%'
+    :return: datetime object in UTC e.g datetime.datetime(2014, 2, 5, 21, 0, tzinfo=<UTC>)
+    """
     utc = pytz.utc
     eastern = pytz.timezone('US/Eastern')
     date_ = datetime.strptime(date, mask)
@@ -55,6 +62,10 @@ class Currency(object):
         return data
 
     def refresh(self):
+        """
+        Refresh stock data
+
+        """
         self.data_set = self._fetch()
 
     def get_bid(self):
@@ -117,6 +128,10 @@ class Share(object):
         return data
 
     def refresh(self):
+        """
+        Refresh stock data
+
+        """
         self.data_set = self._fetch()
 
     def get_price(self):
@@ -195,7 +210,19 @@ class Share(object):
         return self.data_set['LastTradeDateTime']
 
     def get_historical(self, start_date, end_date):
+        """
+        Get Yahoo Finance Stock historical prices
+
+        :param start_date: string date in format '2009-09-11'
+        :param end_date: string date in format '2009-09-11'
+        :return: dict
+        """
         return self.__request_historical(self.symbol, start_date, end_date)['quote']
 
     def get_info(self):
+        """
+        Get Yahoo Finance Stock Summary Information
+
+        :return: dict
+        """
         return self.__request_information(self.symbol)['stock']
