@@ -57,8 +57,7 @@ class Currency(object):
 
     def _fetch(self):
         data = self.__request(self.symbol)['rate']
-        data['DateTime'] = edt_to_utc('%s %s' % (data['Date'], data['Time']))
-        del data['Date'], data['Time']
+        data[u'DateTimeUTC'] = edt_to_utc('%s %s' % (data['Date'], data['Time']))
         return data
 
     def refresh(self):
@@ -78,7 +77,7 @@ class Currency(object):
         return self.data_set['Rate']
 
     def get_trade_datetime(self):
-        return self.data_set['DateTime']
+        return self.data_set['DateTimeUTC']
 
 
 class Share(object):
@@ -125,9 +124,7 @@ class Share(object):
 
     def _fetch(self):
         data = self.__request(self.symbol)['quote']
-        data['LastTradeDateTime'] = edt_to_utc('%s %s' %
-                                               (data['LastTradeDate'],
-                                                data['LastTradeTime']))
+        data[u'LastTradeDateTimeUTC'] = edt_to_utc('%s %s' % (data['LastTradeDate'], data['LastTradeTime']))
         return data
 
     def refresh(self):
@@ -210,7 +207,7 @@ class Share(object):
         return self.data_set['ShortRatio']
 
     def get_trade_datetime(self):
-        return self.data_set['LastTradeDateTime']
+        return self.data_set['LastTradeDateTimeUTC']
 
     def get_historical(self, start_date, end_date):
         """
