@@ -57,7 +57,7 @@ class Currency(object):
 
     def _fetch(self):
         data = self.__request(self.symbol)['rate']
-        data['Datetime'] = edt_to_utc('%s %s' % (data['Date'], data['Time'])).strftime('%Y-%m-%d %H:%M:%S %Z%z')
+        data['DateTime'] = edt_to_utc('%s %s' % (data['Date'], data['Time'])).strftime('%Y-%m-%d %H:%M:%S %Z%z')
         del data['Date'], data['Time']
         return data
 
@@ -76,6 +76,9 @@ class Currency(object):
 
     def get_rate(self):
         return self.data_set['Rate']
+
+    def get_trade_datetime(self):
+        return self.data_set['DateTime']
 
 
 class Share(object):
