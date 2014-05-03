@@ -4,7 +4,7 @@ from datetime import datetime
 import pytz
 
 __author__ = 'Lukasz Banasiak'
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 
 
 def edt_to_utc(date, mask='%d/%m/%Y %I:%M%p'):
