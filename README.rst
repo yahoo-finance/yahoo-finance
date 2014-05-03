@@ -137,6 +137,19 @@ Avalible methods
 - ``get_trade_datetime()``
 - ``refresh()``
 
+Install
+-------
+
+From PyPI with pip:
+
+    $ pip install yahoo-finance
+
+From development repo (requires git):
+
+    $ git clone git://github.com/lukaszbanasiak/yahoo-finance.git
+    $ cd yahoo-finance
+    $ python setup.py install
+
 Requirements
 ------------
 
