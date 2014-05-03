@@ -12,6 +12,8 @@ Get shares data
 
 Example: Yahoo! Inc. (``YHOO``)
 
+.. code:: python
+
     >>> from yahoo_finance import Share
     >>> yahoo = Share('YHOO')
     >>> print yahoo.get_open()
@@ -23,6 +25,8 @@ Example: Yahoo! Inc. (``YHOO``)
 
 Refresh data from market
 
+.. code:: python
+
     >>> yahoo.refresh()
     >>> print yahoo.get_price()
     36.87
@@ -31,10 +35,14 @@ Refresh data from market
 
 Historical data
 
+.. code:: python
+
     >>> print yahoo.get_historical('2014-04-25', '2014-04-29')
     [{u'Volume': u'28720000', u'Symbol': u'YHOO', u'Adj_Close': u'35.83', u'High': u'35.89', u'Low': u'34.12', u'Date': u'2014-04-29', u'Close': u'35.83', u'Open': u'34.37'}, {u'Volume': u'30422000', u'Symbol': u'YHOO', u'Adj_Close': u'33.99', u'High': u'35.00', u'Low': u'33.65', u'Date': u'2014-04-28', u'Close': u'33.99', u'Open': u'34.67'}, {u'Volume': u'19391100', u'Symbol': u'YHOO', u'Adj_Close': u'34.48', u'High': u'35.10', u'Low': u'34.29', u'Date': u'2014-04-25', u'Close': u'34.48', u'Open': u'35.03'}]
 
 More readable output :)
+
+.. code:: python
 
     >>> from pprint import pprint    
     >>> pprint(yahoo.get_historical('2014-04-25', '2014-04-29'))
@@ -64,6 +72,8 @@ More readable output :)
       u'Volume': u'19391100'}]    
 
 Summary information for our example
+
+.. code:: python
 
     >>> from pprint import pprint
     >>> pprint(yahoo.get_info())
@@ -110,6 +120,8 @@ Get currency data
 
 Example: EUR/PLN (``EURPLN=X``)
 
+.. code:: python
+
     >>> from yahoo_finance import Currency
     >>> eur_pln = Currency('EURPLN')
     >>> print eur_pln.get_bid()
@@ -122,6 +134,8 @@ Example: EUR/PLN (``EURPLN=X``)
     2014-03-05 11:23:00 UTC+0000
 
 Refresh data from market
+
+.. code:: python
 
     >>> eur_pln.refresh()
     >>> print eur_pln.get_rate()
@@ -142,9 +156,13 @@ Install
 
 From PyPI with pip:
 
+.. code:: bash
+
     $ pip install yahoo-finance
 
-From development repo (requires git):
+From development repo (requires git)::
+
+.. code:: bash
 
     $ git clone git://github.com/lukaszbanasiak/yahoo-finance.git
     $ cd yahoo-finance
