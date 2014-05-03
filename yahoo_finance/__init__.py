@@ -13,14 +13,14 @@ def edt_to_utc(date, mask='%d/%m/%Y %I:%M%p'):
 
     :param date: EDT date string e.g. '5/2/2014 4:00pm'
     :param mask: format of input date e.g '%d/%m/%Y %I:%M%'
-    :return: datetime object in UTC e.g datetime.datetime(2014, 2, 5, 21, 0, tzinfo=<UTC>)
+    :return: UTC date string e.g '2014-03-05 12:23:00 UTC+0000'
     """
     utc = pytz.utc
     eastern = pytz.timezone('US/Eastern')
     date_ = datetime.strptime(date, mask)
     date_eastern = eastern.localize(date_, is_dst=None)
     date_utc = date_eastern.astimezone(utc)
-    return date_utc
+    return date_utc.strftime('%Y-%m-%d %H:%M:%S %Z%z')
 
 
 class YQLQueryError(Exception):
@@ -57,7 +57,7 @@ class Currency(object):
 
     def _fetch(self):
         data = self.__request(self.symbol)['rate']
-        data['DateTime'] = edt_to_utc('%s %s' % (data['Date'], data['Time'])).strftime('%Y-%m-%d %H:%M:%S %Z%z')
+        data['DateTime'] = edt_to_utc('%s %s' % (data['Date'], data['Time']))
         del data['Date'], data['Time']
         return data
 
@@ -127,7 +127,7 @@ class Share(object):
         data = self.__request(self.symbol)['quote']
         data['LastTradeDateTime'] = edt_to_utc('%s %s' %
                                                (data['LastTradeDate'],
-                                                data['LastTradeTime'])).strftime('%Y-%m-%d %H:%M:%S %Z%z')
+                                                data['LastTradeTime']))
         return data
 
     def refresh(self):
