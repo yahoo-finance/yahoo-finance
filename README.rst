@@ -160,7 +160,7 @@ From PyPI with pip:
 
     $ pip install yahoo-finance
 
-From development repo (requires git)::
+From development repo (requires git)
 
 .. code:: bash
 
