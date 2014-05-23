@@ -4,15 +4,15 @@ from datetime import datetime
 import pytz
 
 __author__ = 'Lukasz Banasiak'
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 
 
-def edt_to_utc(date, mask='%d/%m/%Y %I:%M%p'):
+def edt_to_utc(date, mask='%m/%d/%Y %I:%M%p'):
     """
     Convert EDT (Eastern Daylight Time) to UTC
 
-    :param date: EDT date string e.g. '5/2/2014 4:00pm'
-    :param mask: format of input date e.g '%d/%m/%Y %I:%M%'
+    :param date: EDT date string e.g. '5/26/2014 4:00pm'
+    :param mask: format of input date e.g '%m/%d/%Y %I:%M%'
     :return: UTC date string e.g '2014-03-05 12:23:00 UTC+0000'
     """
     utc = pytz.utc
