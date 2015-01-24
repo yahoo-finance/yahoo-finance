@@ -1,6 +1,6 @@
 import yql
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import pytz
 
 __author__ = 'Lukasz Banasiak'
@@ -21,6 +21,35 @@ def edt_to_utc(date, mask='%m/%d/%Y %I:%M%p'):
     date_eastern = eastern.localize(date_, is_dst=None)
     date_utc = date_eastern.astimezone(utc)
     return date_utc.strftime('%Y-%m-%d %H:%M:%S %Z%z')
+
+
+def get_date_range(start_day, end_day, step_days=365, mask='%Y-%m-%d'):
+    """
+    Split date range for a specified number of days.
+
+    Generate tuples with intervals from given range of dates, e.g for `2012-04-25`-`2014-04-29`:
+
+        ('2013-04-29', '2014-04-29')
+        ('2012-04-28', '2013-04-28')
+        ('2012-04-25', '2012-04-27')
+
+    :param start_day: start date string
+    :param end_day: end date string
+    :param step_days: step days
+    :param mask: format of input date e.g '%Y-%m-%d'
+    """
+
+    start = datetime.strptime(start_day, mask)
+    end = datetime.strptime(end_day, mask)
+    if start > end:
+        raise ValueError('Start date "%s" is greater than "%s"' % (start_day, end_day))
+    step = timedelta(days=step_days)
+    while end - step > start:
+        current = end - step
+        yield current.strftime(mask), end.strftime(mask)
+        end = current - timedelta(days=1)
+    else:
+        yield start.strftime(mask), end.strftime(mask)
 
 
 class YQLQueryError(Exception):
@@ -215,9 +244,18 @@ class Share(object):
 
         :param start_date: string date in format '2009-09-11'
         :param end_date: string date in format '2009-09-11'
-        :return: dict
+        :return: list
         """
-        return self.__request_historical(self.symbol, start_date, end_date)['quote']
+        hist = []
+        for s, e in get_date_range(start_date, end_date):
+            try:
+                hist.append(self.__request_historical(self.symbol, s, e)['quote'])
+            except TypeError:
+                pass
+        try:
+            return hist[0]
+        except IndexError:
+            return None
 
     def get_info(self):
         """
