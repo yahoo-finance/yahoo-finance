@@ -87,15 +87,30 @@ class Base(object):
         return query
 
     @staticmethod
-    def _request(query):
+    def _is_error_in_results(response):
+        """
+        Check if key name does not start from `Error*`
+
+        For example when Symbol is not found we can find key:
+        `"ErrorIndicationreturnedforsymbolchangedinvalid": "No such ticker symbol. (...)",`
+        """
+        # check if response is dictionary, skip if it is different e.g. list from `get_historical()`
+        if isinstance(response, dict):
+            return next((response[i] for i in response.keys() if 'Error' in i), False)
+
+    def _request(self, query):
         response = yql.YQLQuery().execute(query)
         try:
-            return response['query']['results']
-        except KeyError:
+            results = response['query']['results'].itervalues().next()
+        except (KeyError, StopIteration):
             try:
                 raise YQLQueryError(response['error']['description'])
             except KeyError:
                 raise YQLResponseMalformedError()
+        else:
+            if self._is_error_in_results(results):
+                raise YQLQueryError(self._is_error_in_results(results))
+            return results
 
     def _fetch(self):
         raise NotImplementedError
@@ -112,7 +127,7 @@ class Currency(Base):
 
     def _fetch(self):
         query = self._prepare_query(table='xchange', key='pair')
-        data = self._request(query)['rate']
+        data = self._request(query)
         data[u'DateTimeUTC'] = edt_to_utc('{} {}'.format(data['Date'], data['Time']))
         return data
 
@@ -133,7 +148,7 @@ class Share(Base):
 
     def _fetch(self):
         query = self._prepare_query()
-        data = self._request(query)['quote']
+        data = self._request(query)
         data[u'LastTradeDateTimeUTC'] = edt_to_utc('{} {}'.format(data['LastTradeDate'], data['LastTradeTime']))
         return data
 
@@ -224,7 +239,7 @@ class Share(Base):
         for s, e in get_date_range(start_date, end_date):
             try:
                 query = self._prepare_query(table='historicaldata', startDate=s, endDate=e)
-                hist.append(self._request(query)['quote'])
+                hist.append(self._request(query))
             except TypeError:
                 pass
         try:
@@ -240,6 +255,6 @@ class Share(Base):
         """
         query = self._prepare_query(table='stocks')
         try:
-            return self._request(query)['stock']
+            return self._request(query)
         except IndexError:
             return None
