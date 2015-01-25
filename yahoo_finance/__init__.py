@@ -89,7 +89,7 @@ class Base(object):
         return query
 
     @staticmethod
-    def _is_error_in_results(response):
+    def _is_error_in_results(results):
         """
         Check if key name does not start from `Error*`
 
@@ -97,8 +97,21 @@ class Base(object):
         `"ErrorIndicationreturnedforsymbolchangedinvalid": "No such ticker symbol. (...)",`
         """
         # check if response is dictionary, skip if it is different e.g. list from `get_historical()`
-        if isinstance(response, dict):
-            return next((response[i] for i in response.keys() if 'Error' in i), False)
+        if isinstance(results, dict):
+            return next((results[i] for i in results.keys() if 'Error' in i), False)
+
+    @staticmethod
+    def _change_incorrect_none(results):
+        """
+        Change N/A values to None
+
+        """
+        # check if response is dictionary, skip if it is different e.g. list from `get_historical()`
+        if isinstance(results, dict):
+            for k, v in results.iteritems():
+                if v:
+                    if 'N/A' in v:
+                        results[k] = None
 
     def _request(self, query):
         response = yql.YQLQuery().execute(query)
@@ -112,6 +125,7 @@ class Base(object):
         else:
             if self._is_error_in_results(results):
                 raise YQLQueryError(self._is_error_in_results(results))
+            self._change_incorrect_none(results)
             return results
 
     def _fetch(self):
