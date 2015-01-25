@@ -270,6 +270,8 @@ class Share(Base):
                 hist.extend(self._request(query))
             except TypeError:
                 pass
+            except AttributeError:
+                pass
         return hist
 
     def get_info(self):
