@@ -73,6 +73,8 @@ class Base(object):
     def __init__(self, symbol):
         self.symbol = symbol
         self.data_set = self._fetch()
+        self._table = ''
+        self._key = ''
 
     def _prepare_query(self, table='quotes', key='symbol', **kwargs):
         """
@@ -113,7 +115,9 @@ class Base(object):
             return results
 
     def _fetch(self):
-        raise NotImplementedError
+        query = self._prepare_query(table=self._table, key=self._key)
+        data = self._request(query)
+        return data
 
     def refresh(self):
         """
@@ -125,9 +129,13 @@ class Base(object):
 
 class Currency(Base):
 
+    def __init__(self, symbol):
+        self._table = 'xchange'
+        self._key = 'pair'
+        super(Currency, self).__init__(symbol)
+
     def _fetch(self):
-        query = self._prepare_query(table='xchange', key='pair')
-        data = self._request(query)
+        data = super(Currency, self)._fetch()
         data[u'DateTimeUTC'] = edt_to_utc('{} {}'.format(data['Date'], data['Time']))
         return data
 
@@ -146,9 +154,13 @@ class Currency(Base):
 
 class Share(Base):
 
+    def __init__(self, symbol):
+        self._table = 'quotes'
+        self._key = 'symbol'
+        super(Share, self).__init__(symbol)
+
     def _fetch(self):
-        query = self._prepare_query()
-        data = self._request(query)
+        data = super(Share, self)._fetch()
         data[u'LastTradeDateTimeUTC'] = edt_to_utc('{} {}'.format(data['LastTradeDate'], data['LastTradeTime']))
         return data
 
