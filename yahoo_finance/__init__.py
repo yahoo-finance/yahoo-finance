@@ -150,7 +150,8 @@ class Currency(Base):
 
     def _fetch(self):
         data = super(Currency, self)._fetch()
-        data[u'DateTimeUTC'] = edt_to_utc('{} {}'.format(data['Date'], data['Time']))
+        if data['Date'] and data['Time']:
+            data[u'DateTimeUTC'] = edt_to_utc('{} {}'.format(data['Date'], data['Time']))
         return data
 
     def get_bid(self):
@@ -175,7 +176,8 @@ class Share(Base):
 
     def _fetch(self):
         data = super(Share, self)._fetch()
-        data[u'LastTradeDateTimeUTC'] = edt_to_utc('{} {}'.format(data['LastTradeDate'], data['LastTradeTime']))
+        if data['LastTradeDate'] and data['LastTradeTime']:
+            data[u'LastTradeDateTimeUTC'] = edt_to_utc('{} {}'.format(data['LastTradeDate'], data['LastTradeTime']))
         return data
 
     def get_price(self):
