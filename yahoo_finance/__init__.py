@@ -267,13 +267,12 @@ class Share(Base):
         for s, e in get_date_range(start_date, end_date):
             try:
                 query = self._prepare_query(table='historicaldata', startDate=s, endDate=e)
-                hist.append(self._request(query))
+                hist.extend(self._request(query))
             except TypeError:
                 pass
-        try:
-            return hist[0]
-        except IndexError:
-            return None
+            except AttributeError:
+                pass
+        return hist
 
     def get_info(self):
         """
