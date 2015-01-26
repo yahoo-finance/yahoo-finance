@@ -17,11 +17,11 @@ Example: Yahoo! Inc. (``YHOO``)
     >>> from yahoo_finance import Share
     >>> yahoo = Share('YHOO')
     >>> print yahoo.get_open()
-    36.60
+    '36.60'
     >>> print yahoo.get_price()
-    36.84
+    '36.84'
     >>> print yahoo.get_trade_datetime()
-    2014-02-05 20:50:00 UTC+0000
+    '2014-02-05 20:50:00 UTC+0000'
 
 Refresh data from market
 
@@ -29,9 +29,9 @@ Refresh data from market
 
     >>> yahoo.refresh()
     >>> print yahoo.get_price()
-    36.87
+    '36.87'
     >>> print yahoo.get_trade_datetime()
-    2014-02-05 21:00:00 UTC+0000
+    '2014-02-05 21:00:00 UTC+0000'
 
 Historical data
 
@@ -125,13 +125,13 @@ Example: EUR/PLN (``EURPLN=X``)
     >>> from yahoo_finance import Currency
     >>> eur_pln = Currency('EURPLN')
     >>> print eur_pln.get_bid()
-    4.2007
+    '4.2007'
     >>> print eur_pln.get_ask()
-    4.2091
+    '4.2091'
     >>> print eur_pln.get_rate()
-    4.2049
+    '4.2049'
     >>> print eur_pln.get_trade_datetime()
-    2014-03-05 11:23:00 UTC+0000
+    '2014-03-05 11:23:00 UTC+0000'
 
 Refresh data from market
 
@@ -139,9 +139,9 @@ Refresh data from market
 
     >>> eur_pln.refresh()
     >>> print eur_pln.get_rate()
-    4.2052
+    '4.2052'
     >>> print eur_pln.get_trade_datetime()
-    2014-03-05 11:27:00 UTC+0000
+    '2014-03-05 11:27:00 UTC+0000'
 
 Avalible methods
 
