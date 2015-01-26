@@ -4,6 +4,23 @@ yahoo-finance
 
 Python module to get stock data from Yahoo! Finance
 
+Install
+-------
+
+From PyPI with pip:
+
+.. code:: bash
+
+    $ pip install yahoo-finance
+
+From development repo (requires git)
+
+.. code:: bash
+
+    $ git clone git://github.com/lukaszbanasiak/yahoo-finance.git
+    $ cd yahoo-finance
+    $ python setup.py install
+
 Usage examples
 --------------
 
@@ -151,27 +168,7 @@ Avalible methods
 - ``get_trade_datetime()``
 - ``refresh()``
 
-Install
--------
-
-From PyPI with pip:
-
-.. code:: bash
-
-    $ pip install yahoo-finance
-
-From development repo (requires git)
-
-.. code:: bash
-
-    $ git clone git://github.com/lukaszbanasiak/yahoo-finance.git
-    $ cd yahoo-finance
-    $ python setup.py install
-
 Requirements
 ------------
 
 See ``requirements.txt``
-
-
-
