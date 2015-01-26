@@ -268,8 +268,6 @@ class Share(Base):
             try:
                 query = self._prepare_query(table='historicaldata', startDate=s, endDate=e)
                 hist.extend(self._request(query))
-            except TypeError:
-                pass
             except AttributeError:
                 pass
         return hist
@@ -281,7 +279,4 @@ class Share(Base):
         :return: dict
         """
         query = self._prepare_query(table='stocks')
-        try:
-            return self._request(query)
-        except IndexError:
-            return None
+        return self._request(query)
