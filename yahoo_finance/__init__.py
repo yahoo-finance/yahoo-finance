@@ -85,7 +85,7 @@ class Base(object):
             symbol=self.symbol, table=table, key=key)
         if kwargs:
             for k, v in kwargs.iteritems():
-                query += ' and {}="{}"'.format(k, v)
+                query += ' and {0}="{1}"'.format(k, v)
         return query
 
     @staticmethod
@@ -151,7 +151,7 @@ class Currency(Base):
     def _fetch(self):
         data = super(Currency, self)._fetch()
         if data['Date'] and data['Time']:
-            data[u'DateTimeUTC'] = edt_to_utc('{} {}'.format(data['Date'], data['Time']))
+            data[u'DateTimeUTC'] = edt_to_utc('{0} {1}'.format(data['Date'], data['Time']))
         return data
 
     def get_bid(self):
@@ -177,7 +177,7 @@ class Share(Base):
     def _fetch(self):
         data = super(Share, self)._fetch()
         if data['LastTradeDate'] and data['LastTradeTime']:
-            data[u'LastTradeDateTimeUTC'] = edt_to_utc('{} {}'.format(data['LastTradeDate'], data['LastTradeTime']))
+            data[u'LastTradeDateTimeUTC'] = edt_to_utc('{0} {1}'.format(data['LastTradeDate'], data['LastTradeTime']))
         return data
 
     def get_price(self):
