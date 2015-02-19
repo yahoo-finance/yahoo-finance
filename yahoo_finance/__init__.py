@@ -267,7 +267,10 @@ class Share(Base):
         for s, e in get_date_range(start_date, end_date):
             try:
                 query = self._prepare_query(table='historicaldata', startDate=s, endDate=e)
-                hist.extend(self._request(query))
+                result = self._request(query)
+                if isinstance(result, dict):
+                    result = [result]
+                hist.extend(result)
             except AttributeError:
                 pass
         return hist
