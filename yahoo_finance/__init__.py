@@ -72,7 +72,6 @@ class Base(object):
 
     def __init__(self, symbol):
         self.symbol = symbol
-        self.data_set = self._fetch()
         self._table = ''
         self._key = ''
 
@@ -144,9 +143,10 @@ class Base(object):
 class Currency(Base):
 
     def __init__(self, symbol):
+        super(Currency, self).__init__(symbol)
         self._table = 'xchange'
         self._key = 'pair'
-        super(Currency, self).__init__(symbol)
+        self.refresh()
 
     def _fetch(self):
         data = super(Currency, self)._fetch()
@@ -170,9 +170,10 @@ class Currency(Base):
 class Share(Base):
 
     def __init__(self, symbol):
+        super(Share, self).__init__(symbol)
         self._table = 'quotes'
         self._key = 'symbol'
-        super(Share, self).__init__(symbol)
+        self.refresh()
 
     def _fetch(self):
         data = super(Share, self)._fetch()
