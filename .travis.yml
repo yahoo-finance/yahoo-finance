@@ -1,0 +1,20 @@
+language: python
+
+python:
+    - "2.6"
+    - "2.7"
+    - "pypy"
+    - "pypy3"
+    - "3.3"
+    - "3.4"
+
+install:
+    - if [ "$TRAVIS_PYTHON_VERSION" == "2.6" ]; then pip --quiet install argparse unittest2; fi
+    - python setup.py install
+
+script:
+    -  nosetests --with-coverage --cover-package=yahoo_finance
+
+after_success:
+    - pip install --quiet coveralls
+    - coveralls

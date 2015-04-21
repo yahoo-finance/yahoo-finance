@@ -1,4 +1,4 @@
-import yql
+import yahoo_finance.yql
 
 from datetime import datetime, timedelta
 import pytz
@@ -83,8 +83,8 @@ class Base(object):
         query = 'select * from yahoo.finance.{table} where {key} = "{symbol}"'.format(
             symbol=self.symbol, table=table, key=key)
         if kwargs:
-            for k, v in kwargs.iteritems():
-                query += ' and {0}="{1}"'.format(k, v)
+            query += ''.join(' and {0}="{1}"'.format(k, v)
+                             for k, v in kwargs.items())
         return query
 
     @staticmethod
@@ -107,7 +107,7 @@ class Base(object):
         """
         # check if response is dictionary, skip if it is different e.g. list from `get_historical()`
         if isinstance(results, dict):
-            for k, v in results.iteritems():
+            for k, v in results.items():
                 if v:
                     if 'N/A' in v:
                         results[k] = None
@@ -115,7 +115,7 @@ class Base(object):
     def _request(self, query):
         response = yql.YQLQuery().execute(query)
         try:
-            results = response['query']['results'].itervalues().next()
+            _, results = response['query']['results'].popitem()
         except (KeyError, StopIteration):
             try:
                 raise YQLQueryError(response['error']['description'])
