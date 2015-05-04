@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import pytz
 
 __author__ = 'Lukasz Banasiak'
-__version__ = '1.1.4'
+__version__ = '1.2.0'
 __all__ = ['Currency', 'Share']
 
 
