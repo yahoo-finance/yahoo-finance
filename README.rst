@@ -4,6 +4,9 @@ yahoo-finance
 
 Python module to get stock data from Yahoo! Finance
 
+.. image:: https://travis-ci.org/lukaszbanasiak/yahoo-finance.svg?branch=master
+    :target: https://travis-ci.org/lukaszbanasiak/yahoo-finance
+
 Install
 -------
 
