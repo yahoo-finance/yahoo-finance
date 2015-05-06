@@ -67,6 +67,13 @@ class TestShare(TestCase):
         utc = '2014-05-26 20:00:00 UTC+0000'
         self.assertEqual(edt_to_utc(edt), utc)
 
+    def test_edt_to_utc_issue15(self):
+        # date string for yahoo can contains 0 rather than 12.
+        # This means that it cannot be parsed with %I see GH issue #15.
+        edt = '4/21/2015 0:13am'
+        utc = '2015-04-21 04:13:00 UTC+0000'
+        self.assertEqual(edt_to_utc(edt), utc)
+
     def test_get_date_range(self):
         result = [i for i in get_date_range('2012-04-25', '2014-04-29')]
         expected = [
