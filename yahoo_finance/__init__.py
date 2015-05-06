@@ -18,7 +18,9 @@ def edt_to_utc(date, mask='%m/%d/%Y %I:%M%p'):
     """
     utc = pytz.utc
     eastern = pytz.timezone('US/Eastern')
-    date_ = datetime.strptime(date, mask)
+    # date string for yahoo can contains 0 rather than 12.
+    # This means that it cannot be parsed with %I see GH issue #15.
+    date_ = datetime.strptime(date.replace(" 0:", " 12:"), mask)
     date_eastern = eastern.localize(date_, is_dst=None)
     date_utc = date_eastern.astimezone(utc)
     return date_utc.strftime('%Y-%m-%d %H:%M:%S %Z%z')
