@@ -1,2 +1,2 @@
 pytz==2014.2
-simplejson==3.4.1
+requests

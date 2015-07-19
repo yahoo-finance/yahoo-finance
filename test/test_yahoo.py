@@ -28,14 +28,14 @@ class TestShare(TestCase):
         history = self.yahoo.get_historical('2014-04-25', '2014-04-29')
         self.assertEqual(len(history), 3)
         expected = {
-            'Adj_Close': '35.83',
-            'Close': '35.83',
-            'Date': '2014-04-29',
-            'High': '35.89',
-            'Low': '34.12',
-            'Open': '34.37',
-            'Symbol': 'YHOO',
-            'Volume': '28736000'
+            u'Adj_Close': u'35.830002',
+            u'Close': u'35.830002',
+            u'Date': u'2014-04-29',
+            u'High': u'35.889999',
+            u'Low': u'34.119999',
+            u'Open': u'34.369999',
+            u'Symbol': u'YHOO',
+            u'Volume': u'28736000'
         }
         self.assertDictEqual(history[0], expected)
 
@@ -51,14 +51,14 @@ class TestShare(TestCase):
         history = self.yahoo.get_historical('2014-04-29', '2014-04-29')
         self.assertEqual(len(history), 1)
         expected = {
-            'Adj_Close': '35.83',
-            'Close': '35.83',
-            'Date': '2014-04-29',
-            'High': '35.89',
-            'Low': '34.12',
-            'Open': '34.37',
-            'Symbol': 'YHOO',
-            'Volume': '28736000'
+            u'Adj_Close': u'35.830002',
+            u'Close': u'35.830002',
+            u'Date': u'2014-04-29',
+            u'High': u'35.889999',
+            u'Low': u'34.119999',
+            u'Open': u'34.369999',
+            u'Symbol': u'YHOO',
+            u'Volume': u'28736000'
         }
         self.assertDictEqual(history[0], expected)
 
