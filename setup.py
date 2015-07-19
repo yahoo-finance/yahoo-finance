@@ -67,10 +67,12 @@ setup(
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
         'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ],
 
     # What does your project relate to?
@@ -82,7 +84,7 @@ setup(
 
     # List run-time dependencies here. These will be installed by pip when your
     # project is installed.
-    install_requires=['pytz'],
+    install_requires=['pytz', 'requests'],
 
     # If there are data files included in your packages that need to be
     # installed, specify them here. If using Python 2.6 or less, then these
