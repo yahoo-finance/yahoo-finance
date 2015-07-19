@@ -83,7 +83,7 @@ setup(
 
     # List run-time dependencies here. These will be installed by pip when your
     # project is installed.
-    install_requires=['pytz', 'simplejson'],
+    install_requires=['pytz'],
 
     # If there are data files included in your packages that need to be
     # installed, specify them here. If using Python 2.6 or less, then these
