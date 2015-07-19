@@ -1,2 +1,2 @@
-pytz==2014.2
+pytz
 simplejson==3.4.1
