@@ -59,3 +59,5 @@ class YQLQuery(object):
     self.connection.request('GET', PUBLIC_API_URL + '?' + urlencode({ 'q': yql, 'format': 'json', 'env': DATATABLES_URL }))
     return simplejson.loads(self.connection.getresponse().read())
 
+  def __del__(self):
+    self.connection.close()
