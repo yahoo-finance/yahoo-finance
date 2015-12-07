@@ -28,12 +28,12 @@ class TestShare(TestCase):
         history = self.yahoo.get_historical('2014-04-25', '2014-04-29')
         self.assertEqual(len(history), 3)
         expected = {
-            'Adj_Close': '35.83',
-            'Close': '35.83',
+            'Adj_Close': '35.830002',
+            'Close': '35.830002',
             'Date': '2014-04-29',
-            'High': '35.89',
-            'Low': '34.12',
-            'Open': '34.37',
+            'High': '35.889999',
+            'Low': '34.119999',
+            'Open': '34.369999',
             'Symbol': 'YHOO',
             'Volume': '28736000'
         }
@@ -51,12 +51,12 @@ class TestShare(TestCase):
         history = self.yahoo.get_historical('2014-04-29', '2014-04-29')
         self.assertEqual(len(history), 1)
         expected = {
-            'Adj_Close': '35.83',
-            'Close': '35.83',
+            'Adj_Close': '35.830002',
+            'Close': '35.830002',
             'Date': '2014-04-29',
-            'High': '35.89',
-            'Low': '34.12',
-            'Open': '34.37',
+            'High': '35.889999',
+            'Low': '34.119999',
+            'Open': '34.369999',
             'Symbol': 'YHOO',
             'Volume': '28736000'
         }
@@ -82,6 +82,19 @@ class TestShare(TestCase):
             ('2012-04-25', '2012-04-27'),
         ]
         self.assertEqual(result, expected)
+
+    def test_get_percent_change(self):
+        changes = [
+            {'api_data': '+3.83 - +3.32%', 'val': '+3.32%'},
+            {'api_data': '-3.83 - -3.32%', 'val': '-3.32%'}
+        ]
+
+        for tst in changes:
+            self.yahoo.data_set['Change_PercentChange'] = tst['api_data']
+            self.assertEqual(
+                self.yahoo.get_percent_change(),
+                tst['val']
+            )
 
 
 class TestCurrency(TestCase):

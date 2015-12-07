@@ -108,6 +108,7 @@ Avalible methods
 
 - ``get_price()``
 - ``get_change()``
+- ``get_percent_change()``
 - ``get_volume()``
 - ``get_prev_close()``
 - ``get_open()``

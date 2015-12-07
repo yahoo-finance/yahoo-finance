@@ -189,6 +189,11 @@ class Share(Base):
     def get_change(self):
         return self.data_set['Change']
 
+    def get_percent_change(self):
+        return self.data_set['Change_PercentChange'] \
+            .split(' - ')[-1] \
+            .strip()
+
     def get_volume(self):
         return self.data_set['Volume']
 
