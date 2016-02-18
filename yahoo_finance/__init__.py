@@ -171,11 +171,12 @@ class Currency(Base):
 
 class Share(Base):
 
-    def __init__(self, symbol):
+    def __init__(self, symbol, refresh=True):
         super(Share, self).__init__(symbol)
         self._table = 'quotes'
         self._key = 'symbol'
-        self.refresh()
+        if refresh:
+            self.refresh()
 
     def _fetch(self):
         data = super(Share, self)._fetch()
@@ -286,3 +287,65 @@ class Share(Base):
         """
         query = self._prepare_query(table='stocks')
         return self._request(query)
+
+class MultiShare(Base):
+    def __init__(self, symbols=None):
+        if symbols is None:
+            symbols = []
+        self._table = 'quotes'
+        self._key = 'symbol'
+        self.shares = {symbol.upper(): Share(symbol, refresh=False) for symbol in symbols}
+        self.refresh()
+
+    def _prepare_query(self, table='quotes', key='symbol', **kwargs):
+        """
+        Simple YQL query bulder
+
+        """
+        query = 'select * from yahoo.finance.{table} where {key} IN {symbols}'.format(
+            symbols=self.symbols_to_string(), table=table, key=key)
+        if kwargs:
+            query += ''.join(' and {0}="{1}"'.format(k, v)
+                             for k, v in kwargs.items())
+        return query
+
+    def add_share(self, symbol, refresh=True):
+        self.shares[symbol.upper()] = Share(symbol, refresh=refresh)
+
+    def del_share(self, symbol):
+        try:
+            del self.shares[symbol.upper()]
+        except KeyError:
+            pass
+
+    def get_share(self, symbol=None):
+        """
+        Returns Share object by symbol name, or all Shares if no symbol provided
+        """
+        if symbol:
+            return self.shares.get(symbol.upper())
+        else:
+            return self.shares
+
+    def symbols_to_string(self):
+        """
+        Creates a string of the instances symbols for use in the YQL query
+        """
+        return '("{0}")'.format('", "'.join(self.shares.keys()))
+
+    def refresh(self):
+        """
+        Refresh stock data
+
+        """
+        symbols = self.shares.keys()
+        num_symbols = len(symbols)
+        if num_symbols > 1:
+            all_data = self._fetch()
+            for data in all_data:
+                self.shares[data["symbol"]].data_set = data
+                if data['LastTradeDate'] and data['LastTradeTime']:
+                    data[u'LastTradeDateTimeUTC'] = edt_to_utc('{0} {1}'.format(data['LastTradeDate'], data['LastTradeTime']))
+        elif num_symbols == 1:
+            self.shares[symbols[0]].refresh()
+
