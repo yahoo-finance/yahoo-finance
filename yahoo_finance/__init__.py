@@ -278,7 +278,7 @@ class Share(Base):
                 pass
         return hist
 
-    def dividend_history(self, start_date, end_date):
+    def get_dividend_history(self, start_date, end_date):
         """
         Get Yahoo Finance Stock historical prices
 
