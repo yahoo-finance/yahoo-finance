@@ -290,9 +290,9 @@ class Share(Base):
           query = self._prepare_query(table='dividendhistory', startDate=start_date, endDate=end_date)
           result = self._request(query)
           if isinstance(result, dict):
-            result = list(result)
+            result = [result]
         except AttributeError:
-          pass
+          result = []
 
         return result
 
