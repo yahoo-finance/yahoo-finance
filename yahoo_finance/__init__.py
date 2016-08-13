@@ -72,6 +72,10 @@ class YQLResponseMalformedError(Exception):
 
 class SymbolDoesNotExistError(Exception):
 
+    def __init__(self):
+        Exception.__init__(self, 'The symbol does not seem to exist')
+
+
     def _str_(self):
         return 'The symbol does not seem to exist'
 
@@ -120,6 +124,11 @@ class Base(object):
                     if 'N/A' in v:
                         results[k] = None
 
+    @staticmethod
+    def _validate_symbol(result):
+        if result['LastTradePriceOnly'] == None:
+            raise SymbolDoesNotExistError()
+
     def _request(self, query):
         response = yql.YQLQuery().execute(query)
         try:
@@ -133,6 +142,7 @@ class Base(object):
             if self._is_error_in_results(results):
                 raise YQLQueryError(self._is_error_in_results(results))
             self._change_incorrect_none(results)
+            self._validate_symbol(results)
             return results
 
     def _fetch(self):
