@@ -70,6 +70,12 @@ class YQLResponseMalformedError(Exception):
         return 'Response malformed.'
 
 
+class SymbolDoesNotExistError(Exception):
+
+    def _str_(self):
+        return 'The symbol does not seem to exist'
+
+
 class Base(object):
 
     def __init__(self, symbol):
