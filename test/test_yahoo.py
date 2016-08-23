@@ -83,6 +83,19 @@ class TestShare(TestCase):
         ]
         self.assertEqual(result, expected)
 
+    def test_get_percent_change(self):
+        changes = [
+            {'api_data': '+3.83 - +3.32%', 'val': '+3.32%'},
+            {'api_data': '-3.83 - -3.32%', 'val': '-3.32%'}
+        ]
+
+        for tst in changes:
+            self.yahoo.data_set['Change_PercentChange'] = tst['api_data']
+            self.assertEqual(
+                self.yahoo.get_percent_change(),
+                tst['val']
+            )
+
 
 class TestCurrency(TestCase):
 
