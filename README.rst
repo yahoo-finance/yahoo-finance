@@ -64,7 +64,7 @@ More readable output :)
 
 .. code:: python
 
-    >>> from pprint import pprint    
+    >>> from pprint import pprint
     >>> pprint(yahoo.get_historical('2014-04-25', '2014-04-29'))
     [{u'Adj_Close': u'35.83',
       u'Close': u'35.83',
@@ -89,7 +89,7 @@ More readable output :)
       u'Low': u'34.29',
       u'Open': u'35.03',
       u'Symbol': u'YHOO',
-      u'Volume': u'19391100'}]    
+      u'Volume': u'19391100'}]
 
 Summary information for our example
 
@@ -134,6 +134,7 @@ Avalible methods
 - ``get_trade_datetime()``
 - ``get_historical(start_date, end_date)``
 - ``get_info()``
+- ``get_name()``
 - ``refresh()``
 
 Get currency data
