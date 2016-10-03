@@ -1,4 +1,5 @@
-import yahoo_finance.yql
+from yahoo_finance.yql import YQLQuery, YQLQueryError,\
+                              YQLResponseMalformedError
 
 from datetime import datetime, timedelta
 import pytz
@@ -55,19 +56,9 @@ def get_date_range(start_day, end_day, step_days=365, mask='%Y-%m-%d'):
         yield start.strftime(mask), end.strftime(mask)
 
 
-class YQLQueryError(Exception):
+<<<<<<< HEAD
 
-    def __init__(self, value):
-        self.value = value
-
-    def __str__(self):
-        return 'Query failed with error: "%s".' % repr(self.value)
-
-
-class YQLResponseMalformedError(Exception):
-
-    def __str__(self):
-        return 'Response malformed.'
+>>>>>>> 3a95616... Added status code check to response and moved error classes to Yql.py
 
 
 class Base(object):
@@ -115,7 +106,7 @@ class Base(object):
                         results[k] = None
 
     def _request(self, query):
-        response = yql.YQLQuery().execute(query)
+        response = YQLQuery().execute(query)
         try:
             _, results = response['query']['results'].popitem()
         except (KeyError, StopIteration, AttributeError):

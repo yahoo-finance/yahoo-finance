@@ -4,11 +4,13 @@ Yahoo! Python SDK
  * Yahoo! Query Language
  * Yahoo! Social API
 
-Find documentation and support on Yahoo! Developer Network: http://developer.yahoo.com
+Find documentation and support on
+Yahoo! Developer Network: http://developer.yahoo.com
 
 Hosted on GitHub: http://github.com/yahoo/yos-social-python/tree/master
 
-@copyright: Copyrights for code authored by Yahoo! Inc. is licensed under the following terms:
+@copyright: Copyrights for code authored by Yahoo! Inc. is licensed under the
+following terms:
 @license:   BSD Open Source License
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,8 +32,8 @@ Hosted on GitHub: http://github.com/yahoo/yos-social-python/tree/master
   THE SOFTWARE.
 """
 
-__author__   = 'Dustin Whittle <dustin@yahoo-inc.com>'
-__version__  = '0.1'
+__author__ = 'Dustin Whittle <dustin@yahoo-inc.com>'
+__version__ = '0.1'
 
 try:
     from http.client import HTTPConnection
@@ -45,19 +47,45 @@ except ImportError:
 import simplejson
 
 # Yahoo! YQL API
-PUBLIC_API_URL  = 'https://query.yahooapis.com/v1/public/yql'
-OAUTH_API_URL   = 'https://query.yahooapis.com/v1/yql'
-DATATABLES_URL  = 'store://datatables.org/alltableswithkeys'
+PUBLIC_API_URL = 'https://query.yahooapis.com/v1/public/yql'
+OAUTH_API_URL = 'https://query.yahooapis.com/v1/yql'
+DATATABLES_URL = 'store://datatables.org/alltableswithkeys'
+
+
+class YQLQueryError(Exception):
+
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return 'Query failed with error: "%s".' % repr(self.value)
+
+
+class YQLResponseMalformedError(Exception):
+
+    def __str__(self):
+        return 'Response malformed.'
+
 
 class YQLQuery(object):
 
-  def __init__(self):
-    self.connection = HTTPConnection('query.yahooapis.com')
+    def __init__(self):
+        self.connection = HTTPConnection('query.yahooapis.com')
+        self.response = None
 
-  def execute(self, yql, token = None):
+    def execute(self, yql, token=None):
 
-    self.connection.request('GET', PUBLIC_API_URL + '?' + urlencode({ 'q': yql, 'format': 'json', 'env': DATATABLES_URL }))
-    return simplejson.loads(self.connection.getresponse().read())
+        self.connection.request('GET', PUBLIC_API_URL + '?' +
+                                urlencode({'q': yql, 'format': 'json',
+                                           'env': DATATABLES_URL}))
 
-  def __del__(self):
-    self.connection.close()
+        self.response = self.connection.getresponse()
+
+        if self.response.status == 200:
+            return simplejson.loads(self.response.read())
+        else:
+            raise YQLQueryError('The server returned error ' +
+                                str(self.response.status))
+
+    def __del__(self):
+        self.connection.close()
