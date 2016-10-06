@@ -56,11 +56,6 @@ def get_date_range(start_day, end_day, step_days=365, mask='%Y-%m-%d'):
         yield start.strftime(mask), end.strftime(mask)
 
 
-<<<<<<< HEAD
-
->>>>>>> 3a95616... Added status code check to response and moved error classes to Yql.py
-
-
 class Base(object):
 
     def __init__(self, symbol):
