@@ -33,7 +33,10 @@ Hosted on GitHub: http://github.com/yahoo/yos-social-python/tree/master
 __author__   = 'Dustin Whittle <dustin@yahoo-inc.com>'
 __version__  = '0.1'
 
-import urllib2
+try:
+    from urllib.request import urlopen
+except ImportError:
+    from urllib2 import urlopen
 try:
     from urllib.parse import urlencode
 except ImportError:
@@ -50,6 +53,6 @@ class YQLQuery(object):
 
   def execute(self, yql, token = None):
 
-    req = urllib2.urlopen(PUBLIC_API_URL + '?' + urlencode({ 'q': yql, 'format': 'json', 'env': DATATABLES_URL }))
+    req = urlopen(PUBLIC_API_URL + '?' + urlencode({ 'q': yql, 'format': 'json', 'env': DATATABLES_URL }))
     return simplejson.loads(req.read())
 
