@@ -33,10 +33,7 @@ Hosted on GitHub: http://github.com/yahoo/yos-social-python/tree/master
 __author__   = 'Dustin Whittle <dustin@yahoo-inc.com>'
 __version__  = '0.1'
 
-try:
-    from http.client import HTTPSConnection
-except ImportError:
-    from httplib import HTTPSConnection
+import urllib2
 try:
     from urllib.parse import urlencode
 except ImportError:
@@ -51,13 +48,8 @@ DATATABLES_URL  = 'store://datatables.org/alltableswithkeys'
 
 class YQLQuery(object):
 
-  def __init__(self):
-    self.connection = HTTPSConnection('query.yahooapis.com')
-
   def execute(self, yql, token = None):
 
-    self.connection.request('GET', PUBLIC_API_URL + '?' + urlencode({ 'q': yql, 'format': 'json', 'env': DATATABLES_URL }))
-    return simplejson.loads(self.connection.getresponse().read())
+    req = urllib2.urlopen(PUBLIC_API_URL + '?' + urlencode({ 'q': yql, 'format': 'json', 'env': DATATABLES_URL }))
+    return simplejson.loads(req.read())
 
-  def __del__(self):
-    self.connection.close()
