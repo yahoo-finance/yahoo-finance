@@ -4,11 +4,13 @@ Yahoo! Python SDK
  * Yahoo! Query Language
  * Yahoo! Social API
 
-Find documentation and support on Yahoo! Developer Network: http://developer.yahoo.com
+Find documentation and support on
+Yahoo! Developer Network: http://developer.yahoo.com
 
 Hosted on GitHub: http://github.com/yahoo/yos-social-python/tree/master
 
-@copyright: Copyrights for code authored by Yahoo! Inc. is licensed under the following terms:
+@copyright: Copyrights for code authored by Yahoo! Inc. is licensed
+under the following terms:
 @license:   BSD Open Source License
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,26 +32,32 @@ Hosted on GitHub: http://github.com/yahoo/yos-social-python/tree/master
   THE SOFTWARE.
 """
 
-__author__   = 'Dustin Whittle <dustin@yahoo-inc.com>'
-__version__  = '0.1'
-
-import urllib2
+try:
+    from urllib.request import urlopen
+except ImportError:
+    from urllib2 import urlopen
 try:
     from urllib.parse import urlencode
 except ImportError:
     from urllib import urlencode
 
-import simplejson
+from simplejson import loads
+
+__author__ = 'Dustin Whittle <dustin@yahoo-inc.com>'
+__version__ = '0.1'
 
 # Yahoo! YQL API
-PUBLIC_API_URL  = 'https://query.yahooapis.com/v1/public/yql'
-OAUTH_API_URL   = 'https://query.yahooapis.com/v1/yql'
-DATATABLES_URL  = 'store://datatables.org/alltableswithkeys'
+PUBLIC_API_URL = 'https://query.yahooapis.com/v1/public/yql'
+OAUTH_API_URL = 'https://query.yahooapis.com/v1/yql'
+DATATABLES_URL = 'store://datatables.org/alltableswithkeys'
+
 
 class YQLQuery(object):
 
-  def execute(self, yql, token = None):
-
-    req = urllib2.urlopen(PUBLIC_API_URL + '?' + urlencode({ 'q': yql, 'format': 'json', 'env': DATATABLES_URL }))
-    return simplejson.loads(req.read())
-
+    def execute(self, yql, token=None):
+        req = urlopen(PUBLIC_API_URL + '?' + urlencode({
+            'q': yql,
+            'format': 'json',
+            'env': DATATABLES_URL
+        }))
+        return loads(req.read())
