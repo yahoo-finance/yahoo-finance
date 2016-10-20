@@ -34,9 +34,9 @@ __author__   = 'Dustin Whittle <dustin@yahoo-inc.com>'
 __version__  = '0.1'
 
 try:
-    from http.client import HTTPConnection
+    from http.client import HTTPSConnection
 except ImportError:
-    from httplib import HTTPConnection
+    from httplib import HTTPSConnection
 try:
     from urllib.parse import urlencode
 except ImportError:
@@ -52,7 +52,7 @@ DATATABLES_URL  = 'store://datatables.org/alltableswithkeys'
 class YQLQuery(object):
 
   def __init__(self):
-    self.connection = HTTPConnection('query.yahooapis.com')
+    self.connection = HTTPSConnection('query.yahooapis.com')
 
   def execute(self, yql, token = None):
 
