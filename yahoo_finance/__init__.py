@@ -284,6 +284,24 @@ class Share(Base):
                 pass
         return hist
 
+    def get_dividend_history(self, start_date, end_date):
+        """
+        Get Yahoo Finance Stock historical prices
+
+        :param start_date: string date in format '2009-09-11'
+        :param end_date: string date in format '2009-09-11'
+        :return: list
+        """
+        try:
+          query = self._prepare_query(table='dividendhistory', startDate=start_date, endDate=end_date)
+          result = self._request(query)
+          if isinstance(result, dict):
+            result = [result]
+        except AttributeError:
+          result = []
+
+        return result
+
     def get_info(self):
         """
         Get Yahoo Finance Stock Summary Information
