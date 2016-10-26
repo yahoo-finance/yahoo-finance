@@ -173,6 +173,34 @@ Avalible methods
 - ``get_trade_datetime()``
 - ``refresh()``
 
+MultiShare Object
+^^^^^^^^^^^^^^^^^
+
+Useful to bundle Shares and reduce YQL API calls
+
+Example: Yahoo! (YHOO), Microsoft (MSFT) and Tesla (TSLA)
+
+.. code:: python
+
+    >>> from yahoo_finance import MultiShare
+    >>> shares = MultiShare(["YHOO", "MSFT", "TSLA"])
+    >>> shares.get_share()
+    {'YHOO': <yahoo_finance.Share object at 0x10e45a690>, 'TSLA': <yahoo_finance.Share object at 0x10e45aed0>, 'MSFT': <yahoo_finance.Share object at 0x10e45ab10>}
+    >>> shares.get_share('YHOO').get_price()
+    '29.37'
+    >>> shares.add_share('GOOG')
+    >>> shares.get_share()
+    {'GOOG': <yahoo_finance.Share object at 0x10e45a450>, 'YHOO': <yahoo_finance.Share object at 0x10e45a690>, 'TSLA': <yahoo_finance.Share object at 0x10e45aed0>, 'MSFT': <yahoo_finance.Share object at 0x10e45ab10>}
+    >>> shares.get_share('GOOG').get_price()
+    '708.40'
+
+Available methods
+
+- ``get_share()``
+- ``add_share()``
+- ``del_share()``
+- ``refresh()``
+
 Requirements
 ------------
 

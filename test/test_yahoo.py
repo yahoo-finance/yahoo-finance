@@ -6,7 +6,7 @@ if sys.version_info < (2, 7):
 else:
     from unittest import main as test_main, SkipTest, TestCase
 
-from yahoo_finance import Currency, Share, edt_to_utc, get_date_range
+from yahoo_finance import Currency, Share, MultiShare, edt_to_utc, get_date_range
 
 
 class TestShare(TestCase):
@@ -105,6 +105,28 @@ class TestCurrency(TestCase):
                 raise SkipTest("datetime format checking requires the %z directive.")
             else:
                 raise
+
+class TestMultiShare(TestCase):
+
+    def setUp(self):
+        self.no_shares = MultiShare()
+        self.multi = MultiShare(["AAPL", "TSLA", "MSFT"])
+
+    def test_get_share(self):
+        keys = sorted(self.multi.get_share().keys())
+        self.assertEqual(keys, ["AAPL", "MSFT", "TSLA"])
+        for share in keys:
+            self.assertNotEqual(None, self.multi.get_share(share).get_open())
+            self.assertNotEqual(None, self.multi.get_share(share).get_price())
+
+    def test_add(self):
+        self.multi.add_share('YHOO')
+        self.assertTrue('YHOO' in self.multi.get_share().keys())
+        self.assertTrue(isinstance(self.multi.get_share('yhoo'), Share))
+
+    def test_del(self):
+        self.multi.del_share('AAPL')
+        self.assertFalse('AAPL' in self.multi.get_share().keys())
 
 if __name__ == "__main__":
     test_main()
