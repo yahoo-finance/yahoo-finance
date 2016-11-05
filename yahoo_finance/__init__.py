@@ -271,20 +271,20 @@ class Share(Base):
     def get_change_from_50_day_moving_average(self):
         return self.data_set['ChangeFromFiftydayMovingAverage']
 
-    def get_after_hours_change_realtime(self):
-        return self.data_set['AfterHoursChangeRealtime']
+    #def get_after_hours_change_realtime(self):
+    #    return self.data_set['AfterHoursChangeRealtime']
 
     def get_EPS_estimate_next_quarter(self):
         return self.data_set['EPSEstimateNextQuarter']
-###
-    def get_annualized_gain(self):
-        return self.data_set['AnnualizedGain']
 
-    def get_holdings_value_realtime(self):
-        return self.data_set['HoldingsValueRealtime']
-
-    def get_holdings_gain_percent_realtime(self):
-        return self.data_set['HoldingsGainPercentRealtime']
+    #def get_annualized_gain(self):
+    #    return self.data_set['AnnualizedGain']
+    #
+    # def get_holdings_value_realtime(self):
+    #     return self.data_set['HoldingsValueRealtime']
+    #
+    # def get_holdings_gain_percent_realtime(self):
+    #     return self.data_set['HoldingsGainPercentRealtime']
 
     def get_EPS_estimate_next_year(self):
         return self.data_set['EPSEstimateNextYear']
@@ -301,8 +301,8 @@ class Share(Base):
     def get_change_from_year_high(self):
         return self.data_set['ChangeFromYearHigh']
 
-    def get_holdings_gain_percent(self):
-        return self.data_set['HoldingsGainPercent']
+    # def get_holdings_gain_percent(self):
+    #     return self.data_set['HoldingsGainPercent']
 
     def get_EPS_estimate_current_year(self):
         return self.data_set['EPSEstimateCurrentYear']
@@ -310,44 +310,44 @@ class Share(Base):
     def get_price_EPS_estimate_next_year(self):
         return self.data_set['PriceEPSEstimateNextYear']
 
-    def get_days_value_change(self):
-        return self.data_set['DaysValueChange']
-
-    def get_price_paid(self):
-        return self.data_set['PricePaid']
-
-    def get_order_book_realtime(self):
-        return self.data_set['OrderBookRealtime']
+    # def get_days_value_change(self):
+    #     return self.data_set['DaysValueChange']
+    #
+    # def get_price_paid(self):
+    #     return self.data_set['PricePaid']
+    #
+    # def get_order_book_realtime(self):
+    #     return self.data_set['OrderBookRealtime']
 
     def get_price_EPS_estimate_current_year(self):
         return self.data_set['PriceEPSEstimateCurrentYear']
 
-    def get_high_limit(self):
-        return self.data_set['HighLimit']
+    # def get_high_limit(self):
+    #     return self.data_set['HighLimit']
 
     def get_one_yr_target_price(self):
         return self.data_set['OneyrTargetPrice']
 
-    def get_more_info(self):
-        return self.data_set['MoreInfo']
+    # def get_more_info(self):
+    #     return self.data_set['MoreInfo']
 
     def get_change_percent_change(self):
         return self.data_set['Change_PercentChange']
 
-    def get_ask_realtime(self):
-        return self.data_set['AskRealtime']
-
-    def get_ticker_trend(self):
-        return self.data_set['TickerTrend']
-
-    def get_last_trade_realtime_with_time(self):
-        return self.data_set['LastTradeRealtimeWithTime']
-
-    def get_days_range_realtime(self):
-        return self.data_set['DaysRangeRealtime']
-
-    def get_holdings_value(self):
-        return self.data_set['HoldingsValue']
+    # def get_ask_realtime(self):
+    #     return self.data_set['AskRealtime']
+    #
+    # def get_ticker_trend(self):
+    #     return self.data_set['TickerTrend']
+    #
+    # def get_last_trade_realtime_with_time(self):
+    #     return self.data_set['LastTradeRealtimeWithTime']
+    #
+    # def get_days_range_realtime(self):
+    #     return self.data_set['DaysRangeRealtime']
+    #
+    # def get_holdings_value(self):
+    #     return self.data_set['HoldingsValue']
 
     def get_dividend_pay_date(self):
         return self.data_set['DividendPayDate']
@@ -358,11 +358,11 @@ class Share(Base):
     def get_days_range(self):
         return self.data_set['DaysRange']
 
-    def get_days_value_change_realtime(self):
-        return self.data_set['DaysValueChangeRealtime']
-
-    def get_change_percent_realtime(self):
-        return self.data_set['ChangePercentRealtime']
+    # def get_days_value_change_realtime(self):
+    #     return self.data_set['DaysValueChangeRealtime']
+    #
+    # def get_change_percent_realtime(self):
+    #     return self.data_set['ChangePercentRealtime']
 
     def get_percent_change_from_50_day_moving_average(self):
         return self.data_set['PercentChangeFromFiftydayMovingAverage']
@@ -370,29 +370,26 @@ class Share(Base):
     def get_last_trade_with_time(self):
         return self.data_set['LastTradeWithTime']
 
-    def get_bid_realtime(self):
-        return self.data_set['BidRealtime']
-
-    def get_PE_ratio_realtime(self):
-        return self.data_set['PERatioRealtime']
+    # def get_bid_realtime(self):
+    #     return self.data_set['BidRealtime']
+    #
+    # def get_PE_ratio_realtime(self):
+    #     return self.data_set['PERatioRealtime']
 
     def get_percent_change_from_year_low(self):
         return self.data_set['PercentChangeFromYearLow']
 
-    def get_market_cap_realtime(self):
-        return self.data_set['MarketCapRealtime']
-
-    def get_change_realtime(self):
-        return self.data_set['ChangeRealtime']
+    # def get_market_cap_realtime(self):
+    #     return self.data_set['MarketCapRealtime']
+    #
+    # def get_change_realtime(self):
+    #     return self.data_set['ChangeRealtime']
 
     def get_change_from_200_day_moving_average(self):
         return self.data_set['ChangeFromTwoHundreddayMovingAverage']
 
     def get_year_range(self):
         return self.data_set['YearRange']
-
-
-
 
 
     # New code ends here
