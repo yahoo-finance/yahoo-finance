@@ -136,6 +136,29 @@ Avalible methods
 - ``get_info()``
 - ``get_name()``
 - ``refresh()``
+- ``get_percent_change_from_year_high()``
+- ``get_percent_change_from_year_low()``
+- ``get_change_from_year_low()``
+- ``get_change_from_year_high()``
+- ``get_percent_change_from_200_day_moving_average()``
+- ``get_change_from_200_day_moving_average()``
+- ``get_percent_change_from_50_day_moving_average()``
+- ``get_change_from_50_day_moving_average()``
+- ``get_EPS_estimate_next_quarter()``
+- ``get_EPS_estimate_next_year()``
+- ``get_ex_dividend_date()``
+- ``get_EPS_estimate_current_year()``
+- ``get_price_EPS_estimate_next_year()``
+- ``get_price_EPS_estimate_current_year()``
+- ``get_one_yr_target_price()``
+- ``get_change_percent_change()``
+- ``get_dividend_pay_date()``
+- ``get_currency()``
+- ``get_last_trade_with_time()``
+- ``get_days_range()``
+- ``get_year_range()``
+
+
 
 Get currency data
 ^^^^^^^^^^^^^^^^^

@@ -264,6 +264,69 @@ class Share(Base):
     def get_name(self):
         return self.data_set['Name']
 
+    def get_percent_change_from_year_high(self):
+        return self.data_set['PercebtChangeFromYearHigh']  # spelling error in Yahoo API
+
+    def get_change_from_50_day_moving_average(self):
+        return self.data_set['ChangeFromFiftydayMovingAverage']
+
+    def get_EPS_estimate_next_quarter(self):
+        return self.data_set['EPSEstimateNextQuarter']
+
+    def get_EPS_estimate_next_year(self):
+        return self.data_set['EPSEstimateNextYear']
+
+    def get_percent_change_from_200_day_moving_average(self):
+        return self.data_set['PercentChangeFromTwoHundreddayMovingAverage']
+
+    def get_change_from_year_low(self):
+        return self.data_set['ChangeFromYearLow']
+
+    def get_ex_dividend_date(self):
+        return self.data_set['ExDividendDate']
+
+    def get_change_from_year_high(self):
+        return self.data_set['ChangeFromYearHigh']
+
+    def get_EPS_estimate_current_year(self):
+        return self.data_set['EPSEstimateCurrentYear']
+
+    def get_price_EPS_estimate_next_year(self):
+        return self.data_set['PriceEPSEstimateNextYear']
+
+    def get_price_EPS_estimate_current_year(self):
+        return self.data_set['PriceEPSEstimateCurrentYear']
+
+    def get_one_yr_target_price(self):
+        return self.data_set['OneyrTargetPrice']
+
+    def get_change_percent_change(self):
+        return self.data_set['Change_PercentChange']
+
+    def get_dividend_pay_date(self):
+        return self.data_set['DividendPayDate']
+
+    def get_currency(self):
+        return self.data_set['Currency']
+
+    def get_days_range(self):
+        return self.data_set['DaysRange']
+
+    def get_percent_change_from_50_day_moving_average(self):
+        return self.data_set['PercentChangeFromFiftydayMovingAverage']
+
+    def get_last_trade_with_time(self):
+        return self.data_set['LastTradeWithTime']
+
+    def get_percent_change_from_year_low(self):
+        return self.data_set['PercentChangeFromYearLow']
+
+    def get_change_from_200_day_moving_average(self):
+        return self.data_set['ChangeFromTwoHundreddayMovingAverage']
+
+    def get_year_range(self):
+        return self.data_set['YearRange']
+
     def get_historical(self, start_date, end_date):
         """
         Get Yahoo Finance Stock historical prices
