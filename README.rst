@@ -7,6 +7,14 @@ Python module to get stock data from Yahoo! Finance
 .. image:: https://travis-ci.org/lukaszbanasiak/yahoo-finance.svg?branch=master
     :target: https://travis-ci.org/lukaszbanasiak/yahoo-finance
 
+Yahoo! Finance backend is http://datatables.org/. If this service is down or
+ has network problems you will receive errors from group YQL*,
+ eg. ``YQLQueryError``.
+
+You can monitor this service via https://www.datatables.org/healthchecker/
+
+More details https://github.com/lukaszbanasiak/yahoo-finance/issues/44
+
 Install
 -------
 
@@ -91,7 +99,7 @@ More readable output :)
       u'Symbol': u'YHOO',
       u'Volume': u'19391100'}]
 
-Avalible methods
+Available methods
 
 - ``get_price()``
 - ``get_change()``
