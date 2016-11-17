@@ -346,12 +346,3 @@ class Share(Base):
             except AttributeError:
                 pass
         return hist
-
-    def get_info(self):
-        """
-        Get Yahoo Finance Stock Summary Information
-
-        :return: dict
-        """
-        query = self._prepare_query(table='stocks')
-        return self._request(query)
