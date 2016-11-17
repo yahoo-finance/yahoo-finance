@@ -91,19 +91,6 @@ More readable output :)
       u'Symbol': u'YHOO',
       u'Volume': u'19391100'}]
 
-Summary information for our example
-
-.. code:: python
-
-    >>> from pprint import pprint
-    >>> pprint(yahoo.get_info())
-    {u'FullTimeEmployees': u'12200',
-     u'Industry': u'Internet Information Providers',
-     u'Sector': u'Technology',
-     u'end': u'2014-05-03',
-     u'start': u'1996-04-12',
-     u'symbol': u'YHOO'}
-
 Avalible methods
 
 - ``get_price()``
