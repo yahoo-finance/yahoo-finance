@@ -8,8 +8,8 @@ Python module to get stock data from Yahoo! Finance
     :target: https://travis-ci.org/lukaszbanasiak/yahoo-finance
 
 Yahoo! Finance backend is http://datatables.org/. If this service is down or
- has network problems you will receive errors from group YQL*,
- eg. ``YQLQueryError``.
+has network problems you will receive errors from group YQL*,
+eg. ``YQLQueryError``.
 
 You can monitor this service via https://www.datatables.org/healthchecker/
 
