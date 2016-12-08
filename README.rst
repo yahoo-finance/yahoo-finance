@@ -128,7 +128,6 @@ Available methods
 - ``get_short_ratio()``
 - ``get_trade_datetime()``
 - ``get_historical(start_date, end_date)``
-- ``get_info()``
 - ``get_name()``
 - ``refresh()``
 - ``get_percent_change_from_year_high()``
