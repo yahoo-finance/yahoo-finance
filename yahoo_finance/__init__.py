@@ -327,13 +327,13 @@ class Share(Base):
     def get_year_range(self):
         return self.data_set['YearRange']
 
-    def get_historical(self, start_date, end_date, fmt='panel'):
+    def get_historical(self, start_date, end_date, fmt='dict'):
         """
         Get Yahoo Finance Stock historical prices
 
         :param start_date: string date in format '2009-09-11'
         :param end_date: string date in format '2009-09-11'
-        :param fmt:   return format, default 'panel'
+        :param fmt: return format, default 'dict' (list of dicts; one fo reach date)
                                         'panel' for Pandas panel with index for symbol
                                         'dataframe' for dataframe of values including symbol column
                                         Anything else: as before (list of dicts)
