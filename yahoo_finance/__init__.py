@@ -1,5 +1,5 @@
 import yahoo_finance.yql
-
+import pandas as pd
 from datetime import datetime, timedelta
 import pytz
 
@@ -327,12 +327,16 @@ class Share(Base):
     def get_year_range(self):
         return self.data_set['YearRange']
 
-    def get_historical(self, start_date, end_date):
+    def get_historical(self, start_date, end_date, fmt='dict'):
         """
         Get Yahoo Finance Stock historical prices
 
         :param start_date: string date in format '2009-09-11'
         :param end_date: string date in format '2009-09-11'
+        :param fmt:     return format, default 'dict' (list of dicts; one fo reach date)
+                                        'panel' for Pandas panel with index for symbol
+                                        'dataframe' for dataframe of values including symbol column
+                                        Anything else: as before (list of dicts)
         :return: list
         """
         hist = []
@@ -345,4 +349,16 @@ class Share(Base):
                 hist.extend(result)
             except AttributeError:
                 pass
+        fmt = fmt.lower()
+        if fmt in ['dataframe', 'panel']:
+            hist = pd.DataFrame(hist)
+            # Set values to be values from text.
+            hist['Date'] = hist['Date'].map(lambda d: datetime.strptime(d,'%Y-%m-%d'))
+            # Set the index, sort
+            hist = hist.set_index('Date').sort_index()
+            for c in list(set(hist.columns).difference(['Date','Symbol'])):
+                hist[c] = hist[c].map(float) #OK: maybe volume s/b intger
+            if fmt == 'panel': # Take additional step  of adding Items axis.  Symbol is same in all columns.
+                hist = pd.Panel({hist['Symbol'].iloc[0]:hist[[c for c in hist.columns if c!='Symbol']]})
+            
         return hist
