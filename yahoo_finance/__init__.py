@@ -2,6 +2,7 @@ import yahoo_finance.yql
 
 from datetime import datetime, timedelta
 import pytz
+import warnings
 
 __author__ = 'Lukasz Banasiak'
 __version__ = '1.4.0'
@@ -176,12 +177,17 @@ class Share(Base):
         self._table = 'quotes'
         self._key = 'symbol'
         self.refresh()
+        if (self.validate() is False):
+            warnings.warn(symbol + " is not a valid symbol", RuntimeWarning, stacklevel=2)
 
     def _fetch(self):
         data = super(Share, self)._fetch()
         if data['LastTradeDate'] and data['LastTradeTime']:
             data[u'LastTradeDateTimeUTC'] = edt_to_utc('{0} {1}'.format(data['LastTradeDate'], data['LastTradeTime']))
         return data
+
+    def validate(self):
+        return self.get_price() is not None
 
     def get_price(self):
         return self.data_set['LastTradePriceOnly']
