@@ -31,7 +31,10 @@ under the following terms:
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 """
-import urllib2
+try:
+    from urllib.error import HTTPError
+except ImportError:
+    from urllib2 import HTTPError
 try:
     from urllib.request import urlopen
 except ImportError:
@@ -61,9 +64,8 @@ class YQLQuery(object):
                 'format': 'json',
                 'env': DATATABLES_URL
             }))
-        except urllib2.HTTPError:
+        except HTTPError:
         #Retry on error
-            print("Retrying")
             req = urlopen(PUBLIC_API_URL + '?' + urlencode({
                 'q': yql,
                 'format': 'json',
