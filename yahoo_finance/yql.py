@@ -31,7 +31,10 @@ under the following terms:
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 """
-
+try:
+    from urllib.error import HTTPError
+except ImportError:
+    from urllib2 import HTTPError
 try:
     from urllib.request import urlopen
 except ImportError:
@@ -55,9 +58,17 @@ DATATABLES_URL = 'store://datatables.org/alltableswithkeys'
 class YQLQuery(object):
 
     def execute(self, yql, token=None):
-        req = urlopen(PUBLIC_API_URL + '?' + urlencode({
-            'q': yql,
-            'format': 'json',
-            'env': DATATABLES_URL
-        }))
+        try:
+            req = urlopen(PUBLIC_API_URL + '?' + urlencode({
+                'q': yql,
+                'format': 'json',
+                'env': DATATABLES_URL
+            }))
+        except HTTPError:
+        #Retry on error
+            req = urlopen(PUBLIC_API_URL + '?' + urlencode({
+                'q': yql,
+                'format': 'json',
+                'env': DATATABLES_URL
+            }))
         return loads(req.read())
