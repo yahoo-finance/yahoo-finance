@@ -107,6 +107,8 @@ Available methods
 - ``get_volume()``
 - ``get_prev_close()``
 - ``get_open()``
+- ``get_bid()``
+- ``get_ask()``
 - ``get_avg_daily_volume()``
 - ``get_stock_exchange()``
 - ``get_market_cap()``
