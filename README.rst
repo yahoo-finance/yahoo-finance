@@ -7,6 +7,14 @@ Python module to get stock data from Yahoo! Finance
 .. image:: https://travis-ci.org/lukaszbanasiak/yahoo-finance.svg?branch=master
     :target: https://travis-ci.org/lukaszbanasiak/yahoo-finance
 
+Yahoo! Finance backend is http://datatables.org/. If this service is down or
+has network problems you will receive errors from group YQL*,
+eg. ``YQLQueryError``.
+
+You can monitor this service via https://www.datatables.org/healthchecker/
+
+More details https://github.com/lukaszbanasiak/yahoo-finance/issues/44
+
 Install
 -------
 
@@ -64,7 +72,7 @@ More readable output :)
 
 .. code:: python
 
-    >>> from pprint import pprint    
+    >>> from pprint import pprint
     >>> pprint(yahoo.get_historical('2014-04-25', '2014-04-29'))
     [{u'Adj_Close': u'35.83',
       u'Close': u'35.83',
@@ -89,25 +97,13 @@ More readable output :)
       u'Low': u'34.29',
       u'Open': u'35.03',
       u'Symbol': u'YHOO',
-      u'Volume': u'19391100'}]    
+      u'Volume': u'19391100'}]
 
-Summary information for our example
-
-.. code:: python
-
-    >>> from pprint import pprint
-    >>> pprint(yahoo.get_info())
-    {u'FullTimeEmployees': u'12200',
-     u'Industry': u'Internet Information Providers',
-     u'Sector': u'Technology',
-     u'end': u'2014-05-03',
-     u'start': u'1996-04-12',
-     u'symbol': u'YHOO'}
-
-Avalible methods
+Available methods
 
 - ``get_price()``
 - ``get_change()``
+- ``get_percent_change()``
 - ``get_volume()``
 - ``get_prev_close()``
 - ``get_open()``
@@ -132,8 +128,31 @@ Avalible methods
 - ``get_short_ratio()``
 - ``get_trade_datetime()``
 - ``get_historical(start_date, end_date)``
-- ``get_info()``
+- ``get_name()``
 - ``refresh()``
+- ``get_percent_change_from_year_high()``
+- ``get_percent_change_from_year_low()``
+- ``get_change_from_year_low()``
+- ``get_change_from_year_high()``
+- ``get_percent_change_from_200_day_moving_average()``
+- ``get_change_from_200_day_moving_average()``
+- ``get_percent_change_from_50_day_moving_average()``
+- ``get_change_from_50_day_moving_average()``
+- ``get_EPS_estimate_next_quarter()``
+- ``get_EPS_estimate_next_year()``
+- ``get_ex_dividend_date()``
+- ``get_EPS_estimate_current_year()``
+- ``get_price_EPS_estimate_next_year()``
+- ``get_price_EPS_estimate_current_year()``
+- ``get_one_yr_target_price()``
+- ``get_change_percent_change()``
+- ``get_dividend_pay_date()``
+- ``get_currency()``
+- ``get_last_trade_with_time()``
+- ``get_days_range()``
+- ``get_year_range()``
+
+
 
 Get currency data
 ^^^^^^^^^^^^^^^^^

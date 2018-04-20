@@ -70,5 +70,6 @@ Thumbs.db
 
 # Python VirtualEnvironment
 env
+.env*
 
 # Custom
