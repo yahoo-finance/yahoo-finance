@@ -1,5 +1,5 @@
 =============
-yahoo-finance
+yhoo-finance
 =============
 
 Python module to get stock data from Yahoo! Finance
@@ -7,6 +7,16 @@ Python module to get stock data from Yahoo! Finance
 .. image:: https://travis-ci.org/lukaszbanasiak/yahoo-finance.svg?branch=master
     :target: https://travis-ci.org/lukaszbanasiak/yahoo-finance
 
+Legal disclaimer
+----------------
+Yahoo!, Y!Finance, and Yahoo! finance are registered trademarks of Yahoo, Inc.
+
+yhoo-finance is not affiliated, endorsed, or vetted by Yahoo, Inc. It's an open-source tool that uses Yahoo's publicly available APIs, and is intended for research and educational purposes.
+
+You should refer to Yahoo!'s terms of use (https://policies.yahoo.com/us/en/yahoo/terms/product-atos/apiforydn/index.htm, https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html, https://policies.yahoo.com/us/en/yahoo/terms/index.htm) for details on your rights to use the actual data downloaded. Remember - the Yahoo! finance API is intended for personal use only.
+
+Know issues
+-----------
 Yahoo! Finance backend is http://datatables.org/. If this service is down or
 has network problems you will receive errors from group YQL*,
 eg. ``YQLQueryError``.
@@ -28,7 +38,7 @@ From development repo (requires git)
 
 .. code:: bash
 
-    $ git clone git://github.com/lukaszbanasiak/yahoo-finance.git
+    $ git clone git://github.com/lukaszbanasiak/yhoo-finance.git
     $ cd yahoo-finance
     $ python setup.py install
 
