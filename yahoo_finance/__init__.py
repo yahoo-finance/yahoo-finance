@@ -189,6 +189,12 @@ class Share(Base):
     def get_change(self):
         return self.data_set['Change']
 
+    def get_ask(self):
+        return self.data_set['Ask']
+
+    def get_bid(self):
+        return self.data_set['Bid']
+
     def get_percent_change(self):
         return self.data_set['PercentChange']
 
