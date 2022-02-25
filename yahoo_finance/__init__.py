@@ -1,4 +1,5 @@
 import yahoo_finance.yql
+import requests
 
 from datetime import datetime, timedelta
 import pytz
@@ -346,3 +347,26 @@ class Share(Base):
             except AttributeError:
                 pass
         return hist
+ 
+ 
+    def get_info(self):
+        """
+        Get Yahoo Finance Stock Summary Information
+
+        :return: dict
+        """
+        query = self._prepare_query(table='stocks')
+        response = self._request(query)
+        try:
+            if not response['CompanyName']:
+                response_companyname = requests.get("http://finance.yahoo.com/d/quotes.csv",
+                    params = {
+                        'f' : 'sn',
+                        's' : response['symbol']
+                    }
+                ).text
+                response['CompanyName'] = response_companyname.split(',')[1].replace('"', '').replace('\n', '')
+        except:
+            pass
+        return response
+
