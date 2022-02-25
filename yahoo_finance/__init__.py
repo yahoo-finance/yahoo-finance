@@ -117,7 +117,11 @@ class Base(object):
     def _request(self, query):
         response = yql.YQLQuery().execute(query)
         try:
-            _, results = response['query']['results'].popitem()
+            query = response['query']["results"]
+            if query:
+                _, results = query.popitem()
+            else:
+                results = []
         except (KeyError, StopIteration, AttributeError):
             try:
                 raise YQLQueryError(response['error']['description'])
