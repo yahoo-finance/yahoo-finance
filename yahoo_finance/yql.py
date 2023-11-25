@@ -34,11 +34,9 @@ under the following terms:
 
 try:
     from urllib.request import urlopen
-except ImportError:
-    from urllib2 import urlopen
-try:
     from urllib.parse import urlencode
 except ImportError:
+    from urllib2 import urlopen
     from urllib import urlencode
 
 from simplejson import loads
@@ -53,11 +51,14 @@ DATATABLES_URL = 'store://datatables.org/alltableswithkeys'
 
 
 class YQLQuery(object):
-
     def execute(self, yql, token=None):
-        req = urlopen(PUBLIC_API_URL + '?' + urlencode({
-            'q': yql,
-            'format': 'json',
-            'env': DATATABLES_URL
-        }))
-        return loads(req.read())
+        try:
+            req = urlopen(PUBLIC_API_URL + '?' + urlencode({
+                'q': yql,
+                'format': 'json',
+                'env': DATATABLES_URL
+            }))
+            return loads(req.read())
+        except Exception as e:
+            print(f"YQL query execution failed. Error: {e}")
+            return None
