@@ -1,12 +1,10 @@
 import yahoo_finance.yql
-
 from datetime import datetime, timedelta
 import pytz
 
 __author__ = 'Lukasz Banasiak'
 __version__ = '1.4.0'
 __all__ = ['Currency', 'Share']
-
 
 def edt_to_utc(date, mask='%m/%d/%Y %I:%M%p'):
     """
@@ -18,13 +16,10 @@ def edt_to_utc(date, mask='%m/%d/%Y %I:%M%p'):
     """
     utc = pytz.utc
     eastern = pytz.timezone('US/Eastern')
-    # date string for yahoo can contains 0 rather than 12.
-    # This means that it cannot be parsed with %I see GH issue #15.
     date_ = datetime.strptime(date.replace(" 0:", " 12:"), mask)
     date_eastern = eastern.localize(date_, is_dst=None)
     date_utc = date_eastern.astimezone(utc)
     return date_utc.strftime('%Y-%m-%d %H:%M:%S %Z%z')
-
 
 def get_date_range(start_day, end_day, step_days=365, mask='%Y-%m-%d'):
     """
@@ -54,24 +49,17 @@ def get_date_range(start_day, end_day, step_days=365, mask='%Y-%m-%d'):
     else:
         yield start.strftime(mask), end.strftime(mask)
 
-
 class YQLQueryError(Exception):
-
     def __init__(self, value):
         self.value = value
-
     def __str__(self):
         return 'Query failed with error: "%s".' % repr(self.value)
 
-
 class YQLResponseMalformedError(Exception):
-
     def __str__(self):
         return 'Response malformed.'
 
-
 class Base(object):
-
     def __init__(self, symbol):
         self.symbol = symbol
         self._table = ''
@@ -79,8 +67,7 @@ class Base(object):
 
     def _prepare_query(self, table='quotes', key='symbol', **kwargs):
         """
-        Simple YQL query bulder
-
+        Simple YQL query builder
         """
         query = 'select * from yahoo.finance.{table} where {key} = "{symbol}"'.format(
             symbol=self.symbol, table=table, key=key)
@@ -91,31 +78,18 @@ class Base(object):
 
     @staticmethod
     def _is_error_in_results(results):
-        """
-        Check if key name does not start from `Error*`
-
-        For example when Symbol is not found we can find key:
-        `"ErrorIndicationreturnedforsymbolchangedinvalid": "No such ticker symbol. (...)",`
-        """
-        # check if response is dictionary, skip if it is different e.g. list from `get_historical()`
         if isinstance(results, dict):
             return next((results[i] for i in results.keys() if 'Error' in i), False)
 
     @staticmethod
     def _change_incorrect_none(results):
-        """
-        Change N/A values to None
-
-        """
-        # check if response is dictionary, skip if it is different e.g. list from `get_historical()`
         if isinstance(results, dict):
             for k, v in results.items():
-                if v:
-                    if 'N/A' in v:
-                        results[k] = None
+                if v and 'N/A' in v:
+                    results[k] = None
 
     def _request(self, query):
-        response = yql.YQLQuery().execute(query)
+        response = yahoo_finance.yql.YQLQuery().execute(query)
         try:
             _, results = response['query']['results'].popitem()
         except (KeyError, StopIteration, AttributeError):
@@ -135,15 +109,9 @@ class Base(object):
         return data
 
     def refresh(self):
-        """
-        Refresh stock data
-
-        """
         self.data_set = self._fetch()
 
-
 class Currency(Base):
-
     def __init__(self, symbol):
         super(Currency, self).__init__(symbol)
         self._table = 'xchange'
@@ -170,7 +138,6 @@ class Currency(Base):
 
 
 class Share(Base):
-
     def __init__(self, symbol):
         super(Share, self).__init__(symbol)
         self._table = 'quotes'
@@ -328,13 +295,6 @@ class Share(Base):
         return self.data_set['YearRange']
 
     def get_historical(self, start_date, end_date):
-        """
-        Get Yahoo Finance Stock historical prices
-
-        :param start_date: string date in format '2009-09-11'
-        :param end_date: string date in format '2009-09-11'
-        :return: list
-        """
         hist = []
         for s, e in get_date_range(start_date, end_date):
             try:
